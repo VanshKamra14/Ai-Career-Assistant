@@ -14,18 +14,7 @@ const Home = () => {
 
     const handleGenerateReport = async () => {
         const resumeFile = resumeInputRef.current.files[ 0 ]
-               if (!resumeFile) {
-            alert("Please select a PDF resume file.")
-            return
-        }
-        if (resumeFile.size > 3 * 1024 * 1024) {
-            alert("File size must be less than 3MB.")
-            return
-        }        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
-        if (!data) {
-            alert("Failed to generate report. Please try again.")
-            return
-        }
+        const data = await generateReport({ jobDescription, selfDescription, resumeFile })
         navigate(`/interview/${data._id}`)
     }
 
@@ -86,25 +75,14 @@ const Home = () => {
                                 Upload Resume
                                 <span className='badge badge--best'>Best Results</span>
                             </label>
-                            <div 
-                                className='dropzone' 
-                                onClick={() => resumeInputRef.current.click()}
-                                onDrop={(e) => {
-                                    e.preventDefault()
-                                    const files = e.dataTransfer.files
-                                    if (files.length > 0) {
-                                        resumeInputRef.current.files = files
-                                    }
-                                }}
-                                onDragOver={(e) => e.preventDefault()}
-                            >
+                            <label className='dropzone' htmlFor='resume'>
                                 <span className='dropzone__icon'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16" /><line x1="12" y1="12" x2="12" y2="21" /><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" /></svg>
                                 </span>
                                 <p className='dropzone__title'>Click to upload or drag &amp; drop</p>
-                                <p className='dropzone__subtitle'>PDF (Max 3MB)</p>
-                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf' />
-                            </div>
+                                <p className='dropzone__subtitle'>PDF or DOCX (Max 5MB)</p>
+                                <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
+                            </label>
                         </div>
 
                         {/* OR Divider */}

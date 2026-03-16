@@ -27,7 +27,7 @@ export const useInterview = () => {
             setLoading(false)
         }
 
-        return response ? response.interviewReport : null
+        return response.interviewReport
     }
 
     const getReportById = async (interviewId) => {
